@@ -2,7 +2,7 @@ const express = require("express");
 const z = require("zod");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = require("../config");
-const { User } = require("../schema");
+const { User ,Post} = require("../schema");
 const authMiddleware = require("../middleware");
 const signupValidator = z.object({
   username: z.string().min(3).max(30),
@@ -79,7 +79,7 @@ router.put("/", authMiddleware, async (req, res) => {
     return res.status(411).json({ message: "Error while finding information" });
   }
 });
-router.get("/bulk", authMiddleware, async (req, res) => {
+router.get("/search", authMiddleware, async (req, res) => {
   const filter = req.query.filter || "";
   const users = await User.find({
     $or: [
@@ -100,5 +100,20 @@ router.get("/bulk", authMiddleware, async (req, res) => {
     })),
   });
 });
+
+router.get('/search/:id',authMiddleware,async(req,res)=>{
+    const user=await User.findOne({
+        _id:req.params.id
+    })
+    const posts=await Post.find({
+        username:req.params.id
+    })
+    res.json({
+        user,
+        posts:posts.map((post)=>{
+            return post
+        })
+    })
+})
 
 module.exports = router;
