@@ -143,7 +143,11 @@ const postSchema = new mongoose.Schema({
   },
   comments:{
     //code to be added ? <<Ruchit>>
-    type: [String]
+    type: [{
+      type:Schema.Types.ObjectId,
+      ref:"Comment"
+    }
+    ]
 
   },
 
@@ -177,6 +181,21 @@ const postSchema = new mongoose.Schema({
 
 });
 
+const commentSchema = new mongoose.Schema(
+  {
+    text:String,
+    createdAt:{
+        type:Date,
+        default:Date.now()
+    },
+    author:{
+        type:Schema.Types.ObjectId,
+        ref:'User'
+    }
+  }
+);
+
 const Post = mongoose.model("Post", postSchema);
 const User = mongoose.model("User", userSchema);
+const Comment=mongoose.model("Comment".commentSchema);
 module.exports = { User, Post };
