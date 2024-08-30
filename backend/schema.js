@@ -72,7 +72,7 @@ const userSchema = new Schema({
         default: 0
     },
     bio: {
-        type: string,
+        type: String,
         required: true,
         maxLength: 150,
         default: "",
@@ -107,10 +107,15 @@ const userSchema = new Schema({
         enum:['male','female'],
         required:true
     },
-    bookmarks:{
+    bookmarks:
+      [
+        {type:Schema.Types.ObjectId,
+          ref:"Post"
+        }
+      ]
         //code to be added  ? << Rucht>>
         //also add bookmark count
-      },
+      ,
 
   });
 const postSchema = new mongoose.Schema({
@@ -150,11 +155,21 @@ const postSchema = new mongoose.Schema({
   },
 
   bookmarksCount:{
+    type:Number,
+    default:0
     //code to be added  ? << Rucht>>
     //also add bookmark count
   },
 
   media: {
+    filename:{
+      type:String,
+
+  },
+  url:{
+      type:String,
+
+  }
     //code to be added ? << Ruchit >> 
   }
 
@@ -162,6 +177,6 @@ const postSchema = new mongoose.Schema({
 
 });
 
-const Account = mongoose.model("Post", postSchema);
+const Post = mongoose.model("Post", postSchema);
 const User = mongoose.model("User", userSchema);
-module.exports = { User, Account };
+module.exports = { User, Post };
