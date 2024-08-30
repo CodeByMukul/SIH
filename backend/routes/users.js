@@ -1,0 +1,104 @@
+const express = require("express");
+const z = require("zod");
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = require("../config");
+const { User } = require("../schema");
+const authMiddleware = require("../middleware");
+const signupValidator = z.object({
+  username: z.string().min(3).max(30),
+  firstName: z.string().max(50),
+  lastName: z.string().max(50),
+  password: z.string().min(6),
+  bio:z.string().max(150),
+  gender:z.enum(["male","female"])
+});
+const signinValidator = z.object({
+  username: z.string(),
+  password: z.string(),
+});
+const updateValidator = z.object({
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  password: z.string().optional(),
+});
+
+const router = express.Router();
+router.get("/", (req, res) => {
+  res.send("hi");
+});
+router.post("/signup", async (req, res) => {
+  const { success } = signupValidator.safeParse(req.body);
+  if (!success) {
+    return res.status(411).json({ message: "Incorrect inputs" });
+  }
+  const userr = await User.findOne({ username: req.body.username });
+  if (userr) {
+    return res.status(411).json({ message: "Username already taken" });
+  }
+  const user = await User.create(req.body);
+//   await Account.create({
+//     userId: user._id,
+//     balance: 1 + 10000 * Math.random(),
+//   });
+  const userId = user._id;
+  const token = jwt.sign(
+    {
+      userId,
+    },
+    JWT_SECRET,
+  );
+  res.json({
+    message: "user created successfully",
+    token: token,
+  });
+});
+
+router.post("/signin", async (req, res) => {
+  if (signinValidator.safeParse(req.body).success == false) {
+    return res.status(411).json({ message: "error while logging in" });
+  }
+  const user = await User.findOne(req.body);
+  if (!user) {
+    return res.status(411).json({ message: "error while logging in" });
+  } else {
+    const token = jwt.sign(
+      {
+        userId: user._id,
+      },
+      JWT_SECRET,
+    );
+    return res.json({ token: [token] });
+  }
+});
+router.put("/", authMiddleware, async (req, res) => {
+  const success = updateValidator.safeParse(req.body).success;
+  if (success) {
+    await User.findOneAndUpdate({ _id: req.userId }, req.body);
+    return res.status(200).json({ message: "Updated successfully" });
+  } else {
+    return res.status(411).json({ message: "Error while finding information" });
+  }
+});
+router.get("/bulk", authMiddleware, async (req, res) => {
+  const filter = req.query.filter || "";
+  const users = await User.find({
+    $or: [
+      {
+        firstName: { $regex: filter },
+      },
+      {
+        lastName: { $regex: filter },
+      },
+    ],
+  });
+  res.json({
+    user: users.map((user) => ({
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      _id: user._id,
+    })),
+  });
+});
+
+module.exports = router;

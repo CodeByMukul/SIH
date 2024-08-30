@@ -120,9 +120,8 @@ const userSchema = new Schema({
   });
 const postSchema = new mongoose.Schema({
     username:{
-        type:String,
+        type:Schema.Types.ObjectId,
         ref:"User",
-        required:true
 
     },
   location: {
@@ -155,7 +154,7 @@ const postSchema = new mongoose.Schema({
     //code to be added
     //recheck this code <<Ruchit>> 
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
 
   bookmarksCount:{
@@ -197,5 +196,5 @@ const commentSchema = new mongoose.Schema(
 
 const Post = mongoose.model("Post", postSchema);
 const User = mongoose.model("User", userSchema);
-const Comment=mongoose.model("Comment".commentSchema);
-module.exports = { User, Post };
+const Comment=mongoose.model("Comment",commentSchema);
+module.exports = { User, Post,Comment };
