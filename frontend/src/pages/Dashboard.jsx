@@ -3,8 +3,7 @@ import "../styles/Dashboard.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import ProfilePage from './ProfilePage';
-
+import ProfilePage from './raahiProfilePage';
 const Dashboard = () => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [data, setData] = useState({});
