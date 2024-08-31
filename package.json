@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "framer-motion": "^11.3.31",
+    "locomotive-scroll": "^4.1.4"
+  }
+}
