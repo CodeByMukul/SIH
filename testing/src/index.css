@@ -1,0 +1,11 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;700&display=swap');
+
+.font-futura {
+  font-family: 'Futura', sans-serif;
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
