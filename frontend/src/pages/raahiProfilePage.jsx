@@ -17,7 +17,7 @@ import {
 
 const ProfilePage = ({posts=[],user={},url=''}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
+  console.log({...user},"from comp")
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -63,7 +63,8 @@ const ProfilePage = ({posts=[],user={},url=''}) => {
                   </span>
                   <span className="flex items-center">
                     <Camera size={16} className="mr-1 text-yellow-500" />{' '}
-                    {user.postCount} moments
+                    {//!posts.length ki jagah backend db me add krna h logic
+                    posts.length} moments
                   </span>
                   <span className="flex items-center">
                     <Book size={16} className="mr-1 text-yellow-500" />{' '}
@@ -98,7 +99,7 @@ const ProfilePage = ({posts=[],user={},url=''}) => {
               </div>
               <div className="bg-black rounded-lg p-4 text-center hover:bg-gray-700 transition-colors duration-200">
                 <Camera className="mx-auto text-yellow-500 mb-2" size={24} />
-                <p className="font-bold text-2xl text-white">{user.postCount}</p>
+                <p className="font-bold text-2xl text-white">{posts.length}</p>
                 <p className="text-sm text-gray-400">Moments Captured</p>
               </div>
               <div className="bg-black rounded-lg p-4 text-center hover:bg-gray-700 transition-colors duration-200">

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import {
   Search,
@@ -17,10 +18,26 @@ import {
 
 export default function Header(){
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
+    const [users,setUsers]= useState([{}]);
+    const [filter,setFilter]=useState("");
+    const navigate=useNavigate();
+    let timeout=null
     const toggleDropdown = () => {
       setIsDropdownOpen(!isDropdownOpen);
     };
+    useEffect(() => {
+        clearTimeout(timeout);
+        setTimeout(() => {
+          axios
+            .get("http://localhost:3000/users/search/?filter=" + filter, {
+              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            })
+            .then((res) => setUsers(res.data.user));
+        }, 250);
+      }, [filter]);
+      function handleClick(username){
+        navigate('/Dashboard?username='+username)
+      }
 return(
 <header className="bg-black shadow-md fixed w-full z-10 top-0">
 <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -34,9 +51,26 @@ return(
     <div className="relative">
       <input
         type="text"
+        onChange={(e)=>{setFilter(e.target.value)}}
         placeholder="Discover new places..."
         className="pl-8 pr-4 py-2 rounded-full bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
       />
+      {
+       filter?users.map((user)=>(
+        <div className='z-10'>
+            <img className="w-10 h-10 rounded-full" src={user.profile_pic} alt="Rounded avatar"></img>
+            <a href="" onClick={(e)=>handleClick(user.username)}>{user.username}</a>
+        </div>
+       )):null
+      }
+          {/* <div class="py-1" role="none">
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">License</a>
+      <form method="POST" action="#" role="none">
+        <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Sign out</button>
+      </form>
+    </div> */}
       <Search
         className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
         size={18}

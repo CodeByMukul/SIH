@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "../styles/Dashboard.css";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import ProfilePage from './raahiProfilePage';
@@ -11,6 +11,8 @@ const Dashboard = () => {
   const [user,setUser]=useState({});
   const [url,setUrl]=useState('');
   const navigate = useNavigate();
+  const [searchParams]=useSearchParams()
+  const username=searchParams.get("username")
 
   useEffect(() => {
     const fetchLuckyNumber = async () => {
@@ -34,8 +36,36 @@ const Dashboard = () => {
         console.log(error);
       }
     };
+    if(!username){
+    fetchLuckyNumber()}else{
+      console.log(username)
+      const fetchLuckyNumber2 = async () => {
+        let axiosConfig = {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        };
+  
+        try {
 
-    fetchLuckyNumber(); // Don't forget to call the function!
+          const response = await axios.get(`http://localhost:3000/users/user/`+username.trim(), axiosConfig);
+          console.log(response.data.user)
+          setData(response.data);
+          setPosts(response.data.posts); // Correctly setting posts here
+          console.log(response.data.posts,response.data.user);
+          setUrl(response.data.user.profile_pic.url)
+          setUser(response.data.user);
+          setPosts(response.data.posts); // Correctly setting posts here
+        } catch (error) {
+          toast.error(error.message);
+          console.log(error);
+        }
+      }
+
+fetchLuckyNumber2()
+
+
+    }; // Don't forget to call the function!
 
     if (token === "") {
       navigate("/");
@@ -45,10 +75,8 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Dashboard</h1>
 
 
-      <Link to="/logout" className="logout-button">Logout</Link>
       <div>
       {/* <article className="overflow-hidden rounded-lg shadow transition hover:shadow-lg">
   <img
@@ -73,13 +101,7 @@ const Dashboard = () => {
   </div>
 </article> */}
 <ProfilePage posts={posts} user={user} url={url}></ProfilePage>
-{
-        posts.map((post, index) => (
-          <div key={index}>
-            {post.caption}
-          </div>
-        ))
-      }
+
       </div>
     </div>
     
