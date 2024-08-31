@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
 //   });
 
 });
-
+//!AGAR POST KO VIEW KRNA HOGA TO FRONTEND ME JAB POST PR CLICK HOGA TO USER KA DATA
 router.post("/",authMiddleware, async (req, res) => {
   if (postValidator.safeParse(req.body).success == false) {
     return res.status(411).json({ message: "Something went wrong" });
@@ -64,6 +64,19 @@ router.post("/",authMiddleware, async (req, res) => {
     return res.json({ message: "Post created successfully",postId:post._id });
   
 });
+router.get('/:id',authMiddleware,async(req,res)=>{
+    const post=await Post.find({
+        _id:req.params.id
+    });
+    if(!post){
+        return res.status(411).json({
+            message:"Post not found"
+        })
+    }
+    res.json({
+        post
+    })
+})
 
 //!POSTS EDIT KRNE KA BANANA H ABHI KE LIYE CANCELLED
 // router.put("/", authMiddleware, async (req, res) => {

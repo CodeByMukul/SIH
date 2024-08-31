@@ -30,7 +30,7 @@ const Login = () => {
           "http://localhost:3000/users/signin",
           formData
         );
-        localStorage.setItem('auth', JSON.stringify(response.data.token));
+        localStorage.setItem('token', response.data.token);
         toast.success("Login successfull");
         navigate("/dashboard");
       } catch (err) {
@@ -60,7 +60,7 @@ const Login = () => {
             <h2>Welcome back!</h2>
             <p>Please enter your details</p>
             <form onSubmit={handleLoginSubmit}>
-              <input type="email" placeholder="Email" name="email" />
+              <input type="text" placeholder="Email" name="email" />
               <div className="pass-input-div">
                 <input
                   type={showPassword ? "text" : "password"}

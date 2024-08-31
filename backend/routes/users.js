@@ -128,11 +128,28 @@ router.get("/search", authMiddleware, async (req, res) => {
 //         })
 //     })
 // })
+router.get('/user/navbarinfosecretroute',authMiddleware,async(req,res)=>{
+    const user=await User.findOne({
+        _id:req.userId
+    })
+
+    res.json({
+        name:user.firstName+" "+user.lastName,
+        username:user.username,
+        profilePicture:user.profile_pic.url
+    })
+})
 
 router.get('/user/:username',authMiddleware,async(req,res)=>{
     const user=await User.findOne({
         username:req.params.username
     })
+    if(!user){
+        return res.status(411).json({
+            msg:"User does not exist"
+        })
+    }
+
     const id=user._id;
     const posts=await Post.find({
         username:id
@@ -145,18 +162,8 @@ router.get('/user/:username',authMiddleware,async(req,res)=>{
     })
 })
 
-router.get('/post/:id',authMiddleware,async(req,res)=>{
-    const post=await Post.find({
-        _id:req.params.id
-    });
-    if(!post){
-        return res.status(411).json({
-            message:"Post not found"
-        })
-    }
-    res.json({
-        post
-    })
-})
+
+
+
 
 module.exports = router;
