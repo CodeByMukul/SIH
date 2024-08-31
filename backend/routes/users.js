@@ -9,7 +9,7 @@ const signupValidator = z.object({
   firstName: z.string().max(50),
   lastName: z.string().max(50),
   password: z.string().min(6),
-  bio:z.string().max(150),
+  bio:z.string().max(150).optional(),
   gender:z.enum(["male","female"])
 });
 const signinValidator = z.object({
@@ -20,12 +20,15 @@ const updateValidator = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   password: z.string().optional(),
+  
 });
 
 const router = express.Router();
 router.get("/", (req, res) => {
-  res.send("hi");
+  res.redirect("//127.0.0.1:3000");
 });
+
+//!SIGNUP, REQUIRES FRONTEND TO POST THE FORM DETAILS
 router.post("/signup", async (req, res) => {
   const { success } = signupValidator.safeParse(req.body);
   if (!success) {
@@ -53,6 +56,8 @@ router.post("/signup", async (req, res) => {
   });
 });
 
+
+//! REQUIRES FRONTEND TO POST DETAILS TO SIGN IN
 router.post("/signin", async (req, res) => {
   if (signinValidator.safeParse(req.body).success == false) {
     return res.status(411).json({ message: "error while logging in" });
@@ -70,6 +75,8 @@ router.post("/signin", async (req, res) => {
     return res.json({ token: [token] });
   }
 });
+
+//!EDIT ROUTER, NOT FINALISED
 router.put("/", authMiddleware, async (req, res) => {
   const success = updateValidator.safeParse(req.body).success;
   if (success) {
@@ -79,6 +86,8 @@ router.put("/", authMiddleware, async (req, res) => {
     return res.status(411).json({ message: "Error while finding information" });
   }
 });
+
+//!SEARCH ROUTE, /SEARCH?FILTER= username/firstname/lastname
 router.get("/search", authMiddleware, async (req, res) => {
   const filter = req.query.filter || "";
   const users = await User.find({
@@ -89,6 +98,8 @@ router.get("/search", authMiddleware, async (req, res) => {
       {
         lastName: { $regex: filter },
       },
+      {
+      username:{$regex:filter}}
     ],
   });
   res.json({
@@ -101,18 +112,50 @@ router.get("/search", authMiddleware, async (req, res) => {
   });
 });
 
-router.get('/search/:id',authMiddleware,async(req,res)=>{
+
+
+// router.get('/search/:id',authMiddleware,async(req,res)=>{
+//     const user=await User.findOne({
+//         _id:req.params.id
+//     })
+//     const posts=await Post.find({
+//         username:req.params.id
+//     })
+//     res.json({
+//         user,
+//         posts:posts.map((post)=>{
+//             return post
+//         })
+//     })
+// })
+
+router.get('/user/:username',authMiddleware,async(req,res)=>{
     const user=await User.findOne({
-        _id:req.params.id
+        username:req.params.username
     })
+    const id=user._id;
     const posts=await Post.find({
-        username:req.params.id
+        username:id
     })
     res.json({
         user,
         posts:posts.map((post)=>{
             return post
         })
+    })
+})
+
+router.get('/post/:id',authMiddleware,async(req,res)=>{
+    const post=await Post.find({
+        _id:req.params.id
+    });
+    if(!post){
+        return res.status(411).json({
+            message:"Post not found"
+        })
+    }
+    res.json({
+        post
     })
 })
 
