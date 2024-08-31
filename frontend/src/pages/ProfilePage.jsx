@@ -97,7 +97,7 @@ const ProfilePage = ({
               </div>
               <div className="p-4">
                 <p className="mb-4">{post.content}</p>
-                <img src={post.image} alt="Post" className="w-full rounded-lg mb-4" />
+                <img src={post.media.url} alt="Post" className="w-full rounded-lg mb-4" />
                 <div className="flex justify-between text-gray-600">
                   <span>❤️ {post.likes}</span>
                   <span>💬 {post.comments}</span>

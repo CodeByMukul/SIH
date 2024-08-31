@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [posts, setPosts] = useState([]);
   const [user,setUser]=useState({});
   const [url,setUrl]=useState('');
+  const [urls,setUrls]=useState([])
   const navigate = useNavigate();
   const [searchParams]=useSearchParams()
   const username=searchParams.get("username")
@@ -31,6 +32,8 @@ const Dashboard = () => {
         setPosts(response.data.posts); // Correctly setting posts here
         console.log(response.data.posts);
         setUrl(response2.data.profile_pic.url)
+        setUrls(response.data.posts.map((e)=>e.media.url))
+
       } catch (error) {
         toast.error(error.message);
         console.log(error);
@@ -56,6 +59,7 @@ const Dashboard = () => {
           setUrl(response.data.user.profile_pic.url)
           setUser(response.data.user);
           setPosts(response.data.posts); // Correctly setting posts here
+          setUrls(response.data.posts.map((e)=>e.media.url))
         } catch (error) {
           toast.error(error.message);
           console.log(error);
@@ -100,7 +104,7 @@ fetchLuckyNumber2()
     </p>
   </div>
 </article> */}
-<ProfilePage posts={posts} user={user} url={url}></ProfilePage>
+<ProfilePage posts={posts} user={user} url={url} urls={urls}></ProfilePage>
 
       </div>
     </div>

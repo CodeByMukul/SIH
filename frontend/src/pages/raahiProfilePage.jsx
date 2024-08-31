@@ -15,9 +15,8 @@ import {
   LogOut,
 } from 'lucide-react'; // Import icons
 
-const ProfilePage = ({posts=[],user={},url=''}) => {
+const ProfilePage = ({posts=[],user={},url='',urls=[]}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  console.log({...user},"from comp")
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -122,13 +121,13 @@ const ProfilePage = ({posts=[],user={},url=''}) => {
         <div className="container mx-auto px-4 py-8">
           <h2 className="text-2xl font-bold mb-6 text-white">Travel Log</h2>
           <div className="space-y-6">
-            {posts.map((post) => (
+            {posts.map((post,i) => (
               <div
                 key={post.id}
                 className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
                 <img
-                  src={post.image}
+                  src={urls[i]}
                   alt="Travel moment"
                   className="w-full h-64 object-cover"
                 />
