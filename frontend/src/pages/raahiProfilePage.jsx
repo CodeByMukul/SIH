@@ -140,7 +140,7 @@ const ProfilePage = ({posts=[],user={},url=''}) => {
                     </span>
                     <span className="text-sm text-gray-500">2 days ago</span>
                   </div>
-                  <p className="text-gray-300 mb-4">{post.caption}</p>
+                  <p className="text-gray-300 mb-4" onClick={(e)=>handleClick(post)}>{post.caption}</p>
                   <div className="flex items-center justify-between text-sm text-gray-400">
                     <span>❤️ {post.likes} travelers inspired</span>
                     <span>💬 {post.comments} shared experiences</span>

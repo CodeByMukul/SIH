@@ -51,6 +51,7 @@ export default function Header() {
   function handleClick(username) {
     navigate(`/Dashboard?username=${username}`); // Redirect to the user's profile
     setFilter(""); // Clear the search input
+    navigate(0)
   }
 
   // Hide dropdown when clicking outside
