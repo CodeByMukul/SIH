@@ -15,37 +15,26 @@ import {
   LogOut,
 } from 'lucide-react'; // Import icons
 
-const ProfilePage = () => {
+const ProfilePage = ({posts=[],user={},url=''}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const user = {
-    username: 'johndoe',
-    name: 'John Doe',
-    bio: 'Passionate traveler and photographer',
-    locationCount: 25,
-    joinedDate: 'January 2020',
-    followers: 1234,
-    following: 567,
-    posts: 89,
-    profilePhoto: '/api/placeholder/150/150',
-  };
 
-  const posts = [
-    {
-      id: 1,
-      content: 'Exploring the hidden gems of Rajasthan! #travel #adventure',
-      image: '/api/placeholder/400/300',
-      location: 'Jaipur, India',
-      likes: 42,
-      comments: 7,
-      shares: 3,
-    },
-    // Add more posts as needed
-  ];
+  // const posts = [
+  //   {
+  //     id: 1,
+  //     content: 'Exploring the hidden gems of Rajasthan! #travel #adventure',
+  //     image: '/api/placeholder/400/300',
+  //     location: 'Jaipur, India',
+  //     likes: 42,
+  //     comments: 7,
+  //     shares: 3,
+  //   },
+  //   // Add more posts as needed
+  // ];
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -59,7 +48,7 @@ const ProfilePage = () => {
           <div className="bg-gray-800 rounded-lg shadow-lg p-6">
             <div className="flex flex-col md:flex-row md:items-center md:space-x-6">
               <img
-                src={user.profilePhoto}
+                src={url}
                 alt={user.name}
                 className="w-32 h-32 rounded-full border-4 border-yellow-500 shadow-lg object-cover object-center"
               />
@@ -74,7 +63,7 @@ const ProfilePage = () => {
                   </span>
                   <span className="flex items-center">
                     <Camera size={16} className="mr-1 text-yellow-500" />{' '}
-                    {user.posts} moments
+                    {user.postCount} moments
                   </span>
                   <span className="flex items-center">
                     <Book size={16} className="mr-1 text-yellow-500" />{' '}
@@ -109,7 +98,7 @@ const ProfilePage = () => {
               </div>
               <div className="bg-black rounded-lg p-4 text-center hover:bg-gray-700 transition-colors duration-200">
                 <Camera className="mx-auto text-yellow-500 mb-2" size={24} />
-                <p className="font-bold text-2xl text-white">{user.posts}</p>
+                <p className="font-bold text-2xl text-white">{user.postCount}</p>
                 <p className="text-sm text-gray-400">Moments Captured</p>
               </div>
               <div className="bg-black rounded-lg p-4 text-center hover:bg-gray-700 transition-colors duration-200">
@@ -150,7 +139,7 @@ const ProfilePage = () => {
                     </span>
                     <span className="text-sm text-gray-500">2 days ago</span>
                   </div>
-                  <p className="text-gray-300 mb-4">{post.content}</p>
+                  <p className="text-gray-300 mb-4">{post.caption}</p>
                   <div className="flex items-center justify-between text-sm text-gray-400">
                     <span>❤️ {post.likes} travelers inspired</span>
                     <span>💬 {post.comments} shared experiences</span>

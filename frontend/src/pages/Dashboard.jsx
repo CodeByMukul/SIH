@@ -8,6 +8,8 @@ const Dashboard = () => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [data, setData] = useState({});
   const [posts, setPosts] = useState([]);
+  const [user,setUser]=useState({});
+  const [url,setUrl]=useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,10 +21,14 @@ const Dashboard = () => {
       };
 
       try {
-        const response = await axios.get("http://localhost:3000/posts/", axiosConfig);
+        const response2=await axios.get("http://localhost:3000/users/user",axiosConfig)
+        setUser(response2.data)
+        console.log(response2.data.username)
+        const response = await axios.get(`http://localhost:3000/users/user/`+response2.data.username, axiosConfig);
         setData(response.data);
         setPosts(response.data.posts); // Correctly setting posts here
         console.log(response.data.posts);
+        setUrl(response2.data.profile_pic.url)
       } catch (error) {
         toast.error(error.message);
         console.log(error);
@@ -66,7 +72,7 @@ const Dashboard = () => {
     </p>
   </div>
 </article> */}
-<ProfilePage></ProfilePage>
+<ProfilePage posts={posts} user={user} url={url}></ProfilePage>
 {
         posts.map((post, index) => (
           <div key={index}>

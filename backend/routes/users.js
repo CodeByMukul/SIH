@@ -140,6 +140,16 @@ router.get('/user/navbarinfosecretroute',authMiddleware,async(req,res)=>{
     })
 })
 
+router.get('/user',authMiddleware,async(req,res)=>{
+    const user=await User.findOne({
+        _id:req.userId
+    })
+
+    res.json(
+        user
+    )
+})
+
 router.get('/user/:username',authMiddleware,async(req,res)=>{
     const user=await User.findOne({
         username:req.params.username
