@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import {
   Search,
   Home,
@@ -15,7 +17,7 @@ import {
 
 const ProfilePage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -96,7 +98,9 @@ const ProfilePage = () => {
               )}
             </div>
             {/* Logout Icon Shifted to Right */}
-            <LogOut className="text-white cursor-pointer hover:text-red-600 transition-colors duration-200 ml-4" />
+            <Link to="/logout" className="logout-button">
+            
+            <LogOut className="text-white cursor-pointer hover:text-red-600 transition-colors duration-200 ml-4" /></Link>
           </div>
         </div>
       </header>
