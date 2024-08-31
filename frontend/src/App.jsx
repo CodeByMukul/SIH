@@ -1,6 +1,6 @@
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Dashboard, HomeLayout,  Login, Logout, Register } from "./pages";
+import { Dashboard, HomeLayout,  Login, Logout, Register,RaahiInterface } from "./pages";
 import { ToastContainer, toast } from 'react-toastify';
 import Navbar from "./components/Navbar";
 const router = createBrowserRouter([
@@ -23,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "logout",
         element: <Logout />,
+      },
+      {
+        path:"post",
+        element: <RaahiInterface></RaahiInterface>
       }
     ],
   },

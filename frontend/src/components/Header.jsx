@@ -87,7 +87,7 @@ export default function Header() {
               onChange={(e) => {
                 setFilter(e.target.value);
               }}
-              placeholder="Discover new places..."
+              placeholder="Discover"
               className="pl-8 pr-4 py-2 rounded-full bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
               aria-label="Search"
             />
@@ -101,7 +101,7 @@ export default function Header() {
                     className="flex items-center p-2 cursor-pointer hover:bg-gray-800"
                     onClick={() => handleClick(user.username)}
                   >
-                    <img className="w-10 h-10 rounded-full" src={user.profile_pic} alt="Avatar" />
+                    <img className="w-10 h-10 rounded-full" src={user.pfp} alt="Avatar" />
                     <span className="ml-2 text-white">{user.username}</span>
                     {/* Add divider between options */}
                     {index < users.length - 1 && <hr className="my-2 border-gray-700" />}

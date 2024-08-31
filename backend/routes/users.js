@@ -107,6 +107,7 @@ router.get("/search", authMiddleware, async (req, res) => {
       username: user.username,
       firstName: user.firstName,
       lastName: user.lastName,
+      pfp:user.profile_pic.url,
       _id: user._id,
     })),
   });
