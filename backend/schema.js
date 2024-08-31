@@ -129,7 +129,7 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   activity: {
-    type: String,
+    type: [String],
     // required: true
   },
   likes: {

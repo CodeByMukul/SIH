@@ -17,17 +17,17 @@ const Login = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    let email = e.target.email.value;
+    let username = e.target.email.value;
     let password = e.target.password.value;
 
-    if (email.length > 0 && password.length > 0) {
+    if (username.length > 0 && password.length > 0) {
       const formData = {
-        email,
+        username,
         password,
       };
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/v1/login",
+          "http://localhost:3000/users/signin",
           formData
         );
         localStorage.setItem('auth', JSON.stringify(response.data.token));
