@@ -130,12 +130,12 @@ export default function Header() {
             />
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-black border border-yellow-500 rounded-md shadow-lg py-1">
-                <p
+                <a
                   className="block px-4 py-2 text-sm text-white hover:bg-gray-800"
-                  onClick={handleClickTitle}
+                  href='http://localhost:5173/dashboard'
                 >
                   Profile
-                </p>
+                </a>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-white hover:bg-gray-800"

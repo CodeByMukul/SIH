@@ -18,7 +18,6 @@ const upload = multer({ storage})
 const postValidator = z.object({
     location: z.string(),
     caption: z.string().max(50),
-    media:z.string().optional(),
     activity:z.string().optional()
   });
 // const signinValidator = z.object({
