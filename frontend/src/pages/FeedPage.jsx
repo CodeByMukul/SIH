@@ -10,6 +10,7 @@ const PostCard = ({ post }) => {
   const navigate = useNavigate();
 
   return (
+    <a href={"http://localhost:5173/post?id="+post._id}>
     <div className="bg-black text-white rounded-lg shadow-lg overflow-hidden mb-6 transition-transform transform hover:scale-105">
       <div className="p-4">
         <div className="flex items-center mb-4">
@@ -50,6 +51,7 @@ const PostCard = ({ post }) => {
         </div>
       </div>
     </div>
+    </a>
   );
 };
 
