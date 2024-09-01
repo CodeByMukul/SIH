@@ -13,7 +13,7 @@ const PostCard = ({ post }) => {
     <div className="bg-black text-white rounded-lg shadow-lg overflow-hidden mb-6 transition-transform transform hover:scale-105">
       <div className="p-4">
         <div className="flex items-center mb-4">
-          <img src={post.media.url} alt={post.location} className="w-12 h-12 rounded-full mr-4" />
+          <img src={post.username.profile_pic.url} alt={post.location} className="w-12 h-12 rounded-full mr-4" />
           <div>
             <h3 className="font-semibold text-yellow-400">{post.username.username}</h3>
             <div className="flex items-center text-gray-400 text-sm">
