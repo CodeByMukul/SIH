@@ -85,7 +85,7 @@ const FeedPage = () => {
 <Header></Header>
       <main className="max-w-2xl mx-auto px-4 py-8 mt-14">
         {posts.map((post) => (
-            <a onClick={()=>navigate('/post?id='+post.id)} className='cursor-pointer'>
+            <a href={'http://localhost:5173/post?id='+post._id}  className='cursor-pointer'>
           <PostCard key={post.id} post={post} /></a>
         ))}
       </main>

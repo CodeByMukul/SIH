@@ -118,7 +118,7 @@ export default function Header() {
           </div>
 
           {/* Navbar Icons */}
-          <Home className="text-white cursor-pointer hover:text-yellow-500 transition-colors duration-200" />
+          <Home className="text-white cursor-pointer hover:text-yellow-500 transition-colors duration-200" onClick={()=>navigate('/home')}/>
           <Compass className="text-white cursor-pointer hover:text-yellow-500 transition-colors duration-200" />
           <Bell className="text-white cursor-pointer hover:text-yellow-500 transition-colors duration-200" />
 
