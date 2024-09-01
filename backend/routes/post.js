@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = require("../config");
 const { User ,Post} = require("../schema");
 const authMiddleware = require("../middleware");
+const multer  = require('multer')
+const {storage}=require('../cloudConfig.js')
+const upload = multer({ storage})
 // const signupValidator = z.object({
 //   username: z.string().min(3).max(30),
 //   firstName: z.string().max(50),

@@ -171,6 +171,7 @@ const postSchema = new mongoose.Schema({
   },
   url:{
       type:String,
+      default:"https://res.cloudinary.com/dillvpltk/image/upload/v1725141877/WhatsApp_Image_2024-09-01_at_03.32.03_4c76b610_bac98k.jpg"
 
   }
     //code to be added ? << Ruchit >> 

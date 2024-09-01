@@ -68,10 +68,16 @@ export default function Header() {
     };
   }, []);
 
+  function handleClickTitle(){
+    navigate('/dashboard')
+    navigate(0)
+  }
+
   return (
     <header className="bg-black shadow-md fixed w-full z-10 top-0">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">
+    
+        <h1 className="text-2xl font-bold" onClick={handleClickTitle}>
           <span className="text-white">R</span>
           <span className="text-yellow-500">aa</span>
           <span className="text-white">hi</span>
@@ -124,12 +130,12 @@ export default function Header() {
             />
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-black border border-yellow-500 rounded-md shadow-lg py-1">
-                <a
-                  href="#"
+                <p
                   className="block px-4 py-2 text-sm text-white hover:bg-gray-800"
+                  onClick={handleClickTitle}
                 >
                   Profile
-                </a>
+                </p>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-white hover:bg-gray-800"

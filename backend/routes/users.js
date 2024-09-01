@@ -21,7 +21,10 @@ const updateValidator = z.object({
   lastName: z.string().optional(),
   password: z.string().optional(),
   
-});
+}); 
+const multer  = require('multer')
+const {storage}=require('../cloudConfig.js')
+const upload = multer({ storage})
 
 const router = express.Router();
 router.get("/", (req, res) => {
@@ -34,11 +37,15 @@ router.post("/signup", async (req, res) => {
   if (!success) {
     return res.status(411).json({ message: "Incorrect inputs" });
   }
+console.log(req)
   const userr = await User.findOne({ username: req.body.username });
   if (userr) {
     return res.status(411).json({ message: "Username already taken" });
   }
-  const user = await User.create(req.body);
+  const user = await User.create(
+req.body
+  );
+
 //   await Account.create({
 //     userId: user._id,
 //     balance: 1 + 10000 * Math.random(),
