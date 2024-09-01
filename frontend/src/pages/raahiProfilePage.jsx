@@ -15,11 +15,17 @@ import {
   LogOut,
 } from 'lucide-react'; // Import icons
 
+
 const ProfilePage = ({posts=[],user={},url='',urls=[]}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  const navigate=useNavigate();
+  function handleClick(id){
+    navigate('/post?id='+id)
+    navigate(0)
+  }
 
 
   // const posts = [
@@ -124,7 +130,8 @@ const ProfilePage = ({posts=[],user={},url='',urls=[]}) => {
             {posts.map((post,i) => (
               <div
                 key={post.id}
-                className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                onClick={(e)=>handleClick(post._id)}
               >
                 <img
                   src={urls[i]}
@@ -139,7 +146,7 @@ const ProfilePage = ({posts=[],user={},url='',urls=[]}) => {
                     </span>
                     <span className="text-sm text-gray-500">2 days ago</span>
                   </div>
-                  <p className="text-gray-300 mb-4" onClick={(e)=>handleClick(post)}>{post.caption}</p>
+                  <a className="text-gray-300 mb-4" onClick={()=>handleClick(post._id)}>{post.caption}</a>
                   <div className="flex items-center justify-between text-sm text-gray-400">
                     <span>❤️ {post.likes} travelers inspired</span>
                     <span>💬 {post.comments} shared experiences</span>

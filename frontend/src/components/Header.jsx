@@ -77,7 +77,7 @@ export default function Header() {
     <header className="bg-black shadow-md fixed w-full z-10 top-0">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
     
-        <h1 className="text-2xl font-bold" onClick={handleClickTitle}>
+        <h1 className="text-2xl font-bold cursor-pointer" onClick={handleClickTitle}>
           <span className="text-white">R</span>
           <span className="text-yellow-500">aa</span>
           <span className="text-white">hi</span>

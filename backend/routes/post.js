@@ -68,17 +68,17 @@ router.post("/",authMiddleware, async (req, res) => {
   
 });
 router.get('/:id',authMiddleware,async(req,res)=>{
-    const post=await Post.find({
-        _id:req.params.id
-    });
+    const post=await Post.findById(
+        req.params.id
+    );
     if(!post){
         return res.status(411).json({
             message:"Post not found"
         })
     }
-    res.json({
+    res.json(
         post
-    })
+    )
 })
 
 //!POSTS EDIT KRNE KA BANANA H ABHI KE LIYE CANCELLED

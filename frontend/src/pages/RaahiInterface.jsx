@@ -2,8 +2,12 @@ import React, { useEffect ,useState} from 'react';
 import '../styles/index.css'; // Ensure this includes Futura font import
 import Header from '../components/Header';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 function RaahiInterface() {
     const [searchParams]=useSearchParams();
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [url,setUrl]=useState('');
+    
     const [data,setData]=useState({})
     const id=searchParams.get("id")
     useEffect(()=>{
@@ -16,12 +20,18 @@ function RaahiInterface() {
               };
         
               try {
-                const res=await axios.get("http://localhost:3000/users/user",axiosConfig);
-                console.log(res)}
+                const res=await axios.get("http://localhost:3000/posts/"+id,axiosConfig);
+                console.log(res)
+                setData(res.data)
+                setUrl(res.data.media.url)
+            }
                 catch(e){
                     console.log(e.message);
                 }
-        }}
+        }
+        getPost()
+    }
+
     },[]);
   return (
     <div className="min-h-screen flex flex-col bg-black p-6">
@@ -34,7 +44,7 @@ function RaahiInterface() {
           <div className="sm:w-1/2">
             <img
               alt="Furniture arrangement"
-              src={data.media}
+              src={url}
               className="h-72 w-full object-cover sm:h-full"
             />
           </div>
@@ -48,15 +58,13 @@ function RaahiInterface() {
 
               <a href="#" className="block mt-4">
                 <h3 className="text-xl font-semibold text-white">
-                  How to position your furniture for positivity
+                    {data.location}
                 </h3>
+
               </a>
 
               <p className="mt-4 text-lg text-white">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae dolores, possimus
-                pariatur animi temporibus nesciunt praesentium dolore sed nulla ipsum eveniet corporis
-                quidem, mollitia itaque minus soluta, voluptates neque explicabo tempora nisi culpa eius
-                atque dignissimos. Molestias explicabo corporis voluptatem?
+                {data.caption}
               </p>
             </div>
 
