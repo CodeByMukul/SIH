@@ -1,6 +1,6 @@
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Dashboard, HomeLayout,  Login, Logout, Register,RaahiInterface } from "./pages";
+import { Dashboard, HomeLayout,  Login, Logout, Register,RaahiInterface,FeedPage } from "./pages";
 import { ToastContainer, toast } from 'react-toastify';
 import Navbar from "./components/Navbar";
 const router = createBrowserRouter([
@@ -27,6 +27,10 @@ const router = createBrowserRouter([
       {
         path:"post",
         element: <RaahiInterface></RaahiInterface>
+      },
+      {
+        path:"home",
+        element: <FeedPage/>
       }
     ],
   },

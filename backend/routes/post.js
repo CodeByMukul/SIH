@@ -44,7 +44,7 @@ router.get("/", async (req, res) => {
 //     return res.status(411).json({ message: "Username already taken" });
 //   }
 //   const user = await User.create(req.body);
-  const posts=await Post.find()
+  const posts=await Post.find().populate('username').exec()
   if(!posts){
     return res.status(411).json({message:"Error finding posts"})
   }
